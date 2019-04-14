@@ -18,13 +18,9 @@ type ListNode struct {
 //②  nil<-1->2->3
 //③  nil<-1<-2->3
 func reverseList1(head *ListNode) *ListNode {
-    var prev,curr *ListNode
-    curr = head
-    for curr != nil {
-        nextTemp := curr.Next
-        curr.Next = prev
-        prev = curr
-        curr = nextTemp
+    var prev, curr *ListNode
+    for curr = head; curr != nil; {
+        curr.Next, prev, curr = prev, curr, curr.Next
     }
     return prev
 }
