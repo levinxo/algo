@@ -34,15 +34,14 @@ func hasCycle1(head *ListNode) bool {
 //Space complexity O(n)
 func hasCycle2(head *ListNode) bool {
 
-    hashMap := make(map [string] *ListNode)
-
-    for ;head != nil && head.Next != nil; head = head.Next {
-        fmt.Printf("Round val: %d\n", head.Val)
-        p := fmt.Sprintf("%p", head)
-        if _, ok := hashMap[p]; ok {
+    for p, hashMap := head, make(map [string] *ListNode);
+    p != nil && p.Next != nil; p = p.Next {
+        fmt.Printf("Round val: %d\n", p.Val)
+        key := fmt.Sprintf("%p", p)
+        if _, ok := hashMap[key]; ok {
             return true
         }
-        hashMap[p] = head
+        hashMap[key] = p
     }
     return false
 }
