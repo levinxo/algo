@@ -14,32 +14,19 @@ type ListNode struct {
 //Time complexity O(n)
 //Space complexity O(1)
 func swapPairs1(head *ListNode) *ListNode {
-    var prev, curr, next, first *ListNode
-
-    //如果为空或者只有一个元素
     if head == nil || head.Next == nil {
         return head
     }
 
-    curr, next, first = head, head.Next, head.Next
+    var prev  = &ListNode{}
+    prev.Next = head
+    first := head.Next
 
     //两个结点为一组，当前后两个结点都存在才进行比较
-    for curr != nil && next != nil {
-        //该组前后调换
-        curr.Next = next.Next
-        next.Next = curr
-
-        //前面一组指向该组的后一个结点
-        if prev != nil {
-            prev.Next = next
-        }
-
-        prev = curr
-        curr = curr.Next
-        if curr == nil {
-            return first
-        }
-        next = curr.Next
+    for prev.Next != nil && prev.Next.Next != nil {
+        a, b := prev.Next, prev.Next.Next
+        prev.Next, b.Next, a.Next = b, a, b.Next
+        prev = a
     }
     return first
 }
