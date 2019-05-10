@@ -11,34 +11,98 @@ type TreeNode struct {
     Right *TreeNode
 }
 
-//@todo 还有另外两种解法，一种是中序遍历，一种是普通的递归方法
+//迭代法，使用stack，深度优先搜索（preorder），也可以借助队列实现广度优先搜索
+//Time complexity O(n)
+//Space complexity O(n)
+func isValidBST2(root *TreeNode) bool {
+    max := int(^uint(0) >> 1)
+    min := ^max
 
-//每个节点都有一个最大最小值限定
+    var stack []*TreeNode
+    var maxStack, minStack []int
+
+    var push = func (r *TreeNode, u, l int) {
+        stack = append(stack, r)
+        maxStack = append(maxStack, u)
+        minStack = append(minStack, l)
+    }
+    push(root, max, min)
+
+    for len(stack) > 0 {
+        root := stack[len(stack)-1]
+        max = maxStack[len(maxStack)-1]
+        min = minStack[len(minStack)-1]
+
+        stack = stack[:len(stack)-1]
+        maxStack = maxStack[:len(maxStack)-1]
+        minStack = minStack[:len(minStack)-1]
+
+        if root == nil {
+            continue
+        }
+
+        val := root.Val
+        fmt.Printf("root: %d, max: %d, min: %d\n", val, max, min)
+        if val >= max || val <= min {
+            return false
+        }
+        push(root.Right, max, val)
+        push(root.Left, val, min)
+    }
+    return true
+}
+
+//递归法，每个节点都有一个最大最小值限定
 //我们从头节点开始进行递归判断即可
 //Time complexity O(n)
-//Space complexity O(log n)
+//Space complexity O(n)
 func isValidBST1(root *TreeNode) bool {
     //定义两个极限最大最小值
     //使用位运算，先对unsigned int取反后向右移一位，
     //就可获得最大的signed int，再取反可获得最小的signed int
+    //或者设置为nil也是可以的，更合适一些
     max := int(^uint(0) >> 1)
     min := ^max
 
-    if root == nil {
-        return true
-    }
-    return helper(root.Left, root.Val, min) && helper(root.Right, max, root.Val)
+    return helper(root, max, min)
 }
 
 func helper(root *TreeNode, max, min int) bool {
     if root == nil {
         return true
     }
+    fmt.Printf("root: %d, max: %d, min: %d\n", root.Val, max, min)
     if root.Val >= max || root.Val <= min {
         return false
     }
-    fmt.Printf("root: %d, max: %d, min: %d\n", root.Val, max, min)
     return helper(root.Left, root.Val, min) && helper(root.Right, max, root.Val)
+}
+
+//中序遍历，深度优先搜索(inorder)
+//Time complexity O(n)
+//Space complexity O(n)
+func isValidBST3(root *TreeNode) bool {
+    var stack []*TreeNode
+    min := ^int(^uint(0)>>1)
+
+    for len(stack) > 0 || root != nil {
+        for root != nil {
+            stack = append(stack, root)
+            root = root.Left
+        }
+
+        root = stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+
+        fmt.Printf("root: %d, min: %d\n", root.Val, min)
+        if root.Val > min {
+            min = root.Val
+            root = root.Right
+        } else {
+            return false
+        }
+    }
+    return true
 }
 
 func main(){
@@ -71,7 +135,14 @@ func main(){
     a5.Right = &b2; a6.Left  = &b3; a6.Right = &b4
     a7.Left  = &b5; a7.Right = &b6
 
+    fmt.Println("递归法")
     ret := isValidBST1(&a1)
+    fmt.Println(ret)
+    fmt.Println("迭代深搜")
+    ret = isValidBST2(&a1)
+    fmt.Println(ret)
+    fmt.Println("深搜中序遍历")
+    ret = isValidBST3(&a1)
     fmt.Println(ret)
 }
 
