@@ -2,8 +2,8 @@ package main
 
 import "fmt"
 
-//二叉树的最近公共祖先
-//leetcode: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+//二叉树的三种遍历方式
+//若中序遍历二叉搜索树，可得到一个顺序数组
 
 type TreeNode struct {
     Val int
@@ -11,32 +11,31 @@ type TreeNode struct {
     Right *TreeNode
 }
 
-//@todo 还有迭代法
-
-//递归法
-//如果两边都能找到，那么说明当前root即最近的父节点
-//Time complexity O(n)
-//Space complexity O(n)
-func lowestCommonAncestor1(root, p, q *TreeNode) *TreeNode {
+func traversalPreorder(root *TreeNode){
     if root == nil {
-        return root
+        return
     }
+    fmt.Printf("root: %d\n", root.Val)
+    traversalPreorder(root.Left)
+    traversalPreorder(root.Right)
+}
 
-    //如果找到两个结点中任意一个，就返回
-    if root == p || root == q {
-        return root
+func traversalInorder(root *TreeNode){
+    if root == nil {
+        return
     }
+    traversalInorder(root.Left)
+    fmt.Printf("root: %d\n", root.Val)
+    traversalInorder(root.Right)
+}
 
-    left := lowestCommonAncestor1(root.Left, p, q)
-    right := lowestCommonAncestor1(root.Right, p, q)
-
-    if left == nil {
-        return right
+func traversalPostorder(root *TreeNode){
+    if root == nil {
+        return
     }
-    if right == nil {
-        return left
-    }
-    return root
+    traversalPostorder(root.Left)
+    traversalPostorder(root.Right)
+    fmt.Printf("root: %d\n", root.Val)
 }
 
 func main(){
@@ -69,8 +68,11 @@ func main(){
     a5.Right = &b2; a6.Left  = &b3; a6.Right = &b4
     a7.Left  = &b5; a7.Right = &b6
 
-    fmt.Println("递归法")
-    ret := lowestCommonAncestor1(&a1, &a4, &a5)
-    fmt.Println(ret.Val)
+    fmt.Println("pre-order")
+    traversalPreorder(&a1)
+    fmt.Println("in-order")
+    traversalInorder(&a1)
+    fmt.Println("post-order")
+    traversalPostorder(&a1)
 }
 
