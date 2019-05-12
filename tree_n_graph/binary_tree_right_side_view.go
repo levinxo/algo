@@ -12,8 +12,9 @@ type TreeNode struct {
 }
 
 //广度优先搜索
-//利用队列，把左右结点放入队尾
+//利用队列或chan，把左右结点放入队尾
 //控制两个变量，1个是当前Row的剩余待遍历个数，1个是下一Row的待遍历个数
+//另外，如果不想控制这两个变量，也可以写两层循环，按Row分批进行遍历
 //Time Complexity O(n)
 //Space Complexity O(n)
 func rightSideView(root *TreeNode) []int {
