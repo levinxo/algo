@@ -11,6 +11,33 @@ type TreeNode struct {
     Right *TreeNode
 }
 
+//递归法，深度优先搜索（preorder）
+//每个节点都有一个最大最小值限定
+//我们从头节点开始进行递归判断即可
+//Time complexity O(n)
+//Space complexity O(n)
+func isValidBST1(root *TreeNode) bool {
+    //定义两个极限最大最小值
+    //使用位运算，先对unsigned int取反后向右移一位，
+    //就可获得最大的signed int，再取反可获得最小的signed int
+    //或者设置为nil也是可以的，更合适一些
+    max := int(^uint(0) >> 1)
+    min := ^max
+
+    return helper(root, max, min)
+}
+
+func helper(root *TreeNode, max, min int) bool {
+    if root == nil {
+        return true
+    }
+    fmt.Printf("root: %d, max: %d, min: %d\n", root.Val, max, min)
+    if root.Val >= max || root.Val <= min {
+        return false
+    }
+    return helper(root.Left, root.Val, min) && helper(root.Right, max, root.Val)
+}
+
 //迭代法，使用stack，深度优先搜索（preorder），也可以借助队列实现广度优先搜索
 //Time complexity O(n)
 //Space complexity O(n)
@@ -50,32 +77,6 @@ func isValidBST2(root *TreeNode) bool {
         push(root.Left, val, min)
     }
     return true
-}
-
-//递归法，每个节点都有一个最大最小值限定
-//我们从头节点开始进行递归判断即可
-//Time complexity O(n)
-//Space complexity O(n)
-func isValidBST1(root *TreeNode) bool {
-    //定义两个极限最大最小值
-    //使用位运算，先对unsigned int取反后向右移一位，
-    //就可获得最大的signed int，再取反可获得最小的signed int
-    //或者设置为nil也是可以的，更合适一些
-    max := int(^uint(0) >> 1)
-    min := ^max
-
-    return helper(root, max, min)
-}
-
-func helper(root *TreeNode, max, min int) bool {
-    if root == nil {
-        return true
-    }
-    fmt.Printf("root: %d, max: %d, min: %d\n", root.Val, max, min)
-    if root.Val >= max || root.Val <= min {
-        return false
-    }
-    return helper(root.Left, root.Val, min) && helper(root.Right, max, root.Val)
 }
 
 //中序遍历，深度优先搜索(inorder)
