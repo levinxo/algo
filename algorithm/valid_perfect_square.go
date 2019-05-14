@@ -17,9 +17,10 @@ func isPerfectSquare(num int) bool {
     for left <= right {
         mid := left + (right-left)/2
         //fmt.Println(left, mid, right)
-        if mid*mid == num {
+        //不要使用mid*mid，因为有可能会越界
+        if mid == num/mid && num%mid == 0{
             return true
-        } else if mid*mid < num {
+        } else if mid < num/mid {
             left = mid + 1
         } else {
             right = mid - 1
