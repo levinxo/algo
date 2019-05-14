@@ -18,19 +18,19 @@ func solveSudoku(board [][]byte) {
     if board == nil || len(board) < 1 {
         return
     }
-    ret := helper(&board)
+    ret := helper(&board, 0)
     fmt.Println(ret)
     printStr(board)
 }
 
-func helper(board *[][]byte) bool {
-    for i:=0; i<len(*board); i++ {
+func helper(board *[][]byte, row int) bool {
+    for i:=row; i<len(*board); i++ {
         for j:=0; j<len((*board)[0]); j++ {
             if (*board)[i][j] == '.' {
                 for c:=byte('1'); c<=byte('9'); c++ {
                     if isValid(board, i, j, c) {
                         (*board)[i][j] = c
-                        if helper(board) {
+                        if helper(board, i) {
                             return true
                         } else {
                             //go back
