@@ -16,7 +16,7 @@ public class HouseRobber {
         if (args.length == 0) {
             return;
         }
-        System.out.println(args[0] + "个住户的最大抢劫量：");
+        System.out.println(args.length + "个住户的最大抢劫量：");
         int[] nums = Arrays.asList(args).stream().mapToInt(Integer::parseInt).toArray();
         System.out.println(rob(nums));
     }
