@@ -1,6 +1,7 @@
 /**
  * https://leetcode.com/problems/unique-paths/description/
  * 62. Unique Paths
+ * https://www.bilibili.com/video/BV1xb411e7ww
  */
 public class Solution {
 
@@ -14,7 +15,24 @@ public class Solution {
         System.out.println(uniquePaths(m, n));
     }
 
+	/**
+	 * Time complexity O(m*n)
+	 * Space complexity O(m*n)
+	 */
     public static int uniquePaths(int m, int n) {
+		/**
+		 * 1.确定状态：最后一步和子问题：
+		 * 假定右下角坐标为(m-1,n-1)，有x种方式从左上角走到(m-2,n-1)，
+		 * 有y种方式从左上角走到(m-1,n-2)，那么机器人有x+y种方式走到(m-1,n-1)
+		 * 问题转化为子问题，有多少种方式从左上角走到(m-2,n-1)和(m-1,n-2)
+		 * 2.转移方程
+		 * dp[i][j] = dp[i][j-1] + dp[i-1][j]
+		 * 3.初始条件和边界情况：
+		 * dp[0][0] = 1
+		 * 注意第一行、第一列，分别是没有上面和左侧的格子的，只能有一个方向过来，因此dp[i][j] = 1
+		 * 4.计算顺序
+		 * 先循环i，即从上到下，再循环j，即从左到右，这样可以满足转移方程可以取到值
+		 */
         if (m <= 0 || n <= 0) {
             return 0;
         }
@@ -22,19 +40,11 @@ public class Solution {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (i == 0 && j == 0) {
+                if (i == 0 || j == 0) {
                     dp[i][j] = 1;
-                } else if (i == 0 && j != 0) {
-                    // 第一行，只能从左侧来
-                    dp[i][j] = dp[i][j - 1];
-                } else if (j == 0 && i != 0) {
-                    // 第一列，只能从上面来
-                    dp[i][j] = dp[i - 1][j];
                 } else {
                     dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
                 }
-                //System.out.println("i: " + i + " j: " + j);
-                //System.out.println(dp[i][j]);
             }
         }
 
