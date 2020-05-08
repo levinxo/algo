@@ -66,6 +66,9 @@ class Solution {
          * buy = -prices[0]，第一天就持有股票
          * sell = 0，第一天买了就卖
          * 4.计算顺序，从头开始就好
+		 * 
+		 * 仔细观察可以发现，其实就是一个dp二维数组
+		 * dp[i][0/1]，代表第i天的最大收益，第二列0和1分别表示卖和买的状态
          */
 
         if (prices == null || prices.length <= 1) {
@@ -77,8 +80,8 @@ class Solution {
         int sell = 0;
 
         for (int i = 1; i < prices.length; i++) {
+			buy = Math.max(buy, -prices[i]);
             sell = Math.max(sell, buy+prices[i]);
-            buy = Math.max(buy, -prices[i]);
             //System.out.println("buy: " + buy + " sell: " + sell);
             //buy: -1 sell: 0
             //buy: -1 sell: 4

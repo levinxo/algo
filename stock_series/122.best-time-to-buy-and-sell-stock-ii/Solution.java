@@ -67,6 +67,9 @@ class Solution {
          * 和121题思路一样，只是状态方程有了变化
          * buy = max(buy, sell-prices[0])
          * sell = max(sell, buy+prices[0])
+         *
+         * 仔细观察可以发现，其实就是一个dp二维数组
+         * dp[i][0/1]，代表第i天的最大收益，第二列0和1分别表示卖和买的状态
          */
         if (prices == null || prices.length <= 1) {
             return 0;
