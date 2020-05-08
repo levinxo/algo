@@ -11,6 +11,8 @@ class Solution {
         System.out.println(maxProfit1(prices));
         System.out.println("波峰波谷法：");
         System.out.println(maxProfit2(prices));
+        System.out.println("动态规划：");
+        System.out.println(maxProfit3(prices));
     }
 
 
@@ -57,6 +59,27 @@ class Solution {
             profit += max - min;
         }
         return profit;
+    }
+
+
+    public static int maxProfit3(int[] prices) {
+        /**
+         * 和121题思路一样，只是状态方程有了变化
+         * buy = max(buy, sell-prices[0])
+         * sell = max(sell, buy+prices[0])
+         */
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+
+        int buy = -prices[0];
+        int sale = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+            buy = Math.max(buy, sale-prices[i]);
+            sale = Math.max(sale, buy+prices[i]);
+        }
+        return sale;
     }
 
 
