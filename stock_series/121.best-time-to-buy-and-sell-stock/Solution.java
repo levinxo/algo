@@ -8,8 +8,10 @@ class Solution {
 		int[] prices = new int[]{7,1,5,3,6,4};
 		System.out.println("暴力法：");
 		System.out.println(maxProfit1(prices));
-		System.out.println("差值法：");
+		System.out.println("贪心算法：");
 		System.out.println(maxProfit2(prices));
+		System.out.println("动态规划：");
+		System.out.println(maxProfit3(prices));
 	}
 
 	public static int maxProfit1(int[] prices) {
@@ -31,7 +33,8 @@ class Solution {
 
 	public static int maxProfit2(int[] prices) {
 		/**
-		 * 一次遍历
+		 * 贪心算法，一次遍历
+         * 遍历到i时，我们能知道prices[:i]中的最小值，也能知道prices[i:]的最大收益
 		 * Time Complexity O(n) 遍历一次prices数组
 		 * Space Complexity O(1) 使用了常数个变量
 		 */
@@ -48,5 +51,43 @@ class Solution {
 
 		return profit;
 	}
+
+    public static int maxProfit3(int[] prices) {
+        /**
+         * 动态规划算法。
+         * 1.最后一步和子问题分析
+         * 每天结束时，我们只会有两种状态，一种是已经买了，一种是已经卖了
+         * 买了的，可能是之前买的，也可能是今天买的
+         * 卖了的，可能是之前卖的，也可能是今天卖的
+         * 2.转移方程
+         * buy = max(buy, -prices[i])
+         * sale = max(sale, -prices[i])
+         * 3.初始值和边界条件
+         * buy = -prices[0]，第一天就持有股票
+         * sale = 0，第一天买了就卖
+         * 4.计算顺序，从头开始就好
+         */
+
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+
+        // initialization
+        int buy = -prices[0];
+        int sale = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+            sale = Math.max(sale, buy+prices[i]);
+            buy = Math.max(buy, -prices[i]);
+            //System.out.println("buy: " + buy + " sale: " + sale);
+            //buy: -1 sale: 0
+            //buy: -1 sale: 4
+            //buy: -1 sale: 4
+            //buy: -1 sale: 5
+            //buy: -1 sale: 5
+        }
+        return sale;
+    }
+
 
 }
