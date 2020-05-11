@@ -5,7 +5,7 @@ class BubbleSort {
 
     public static void main(String[] args) {
         int[] arr = new int[]{5,2,18,3,11,90,45,22};
-        arr = bubbleSort(arr);
+        bubbleSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -14,9 +14,9 @@ class BubbleSort {
      * Time Complexity O(n^2)
      * Space Complexity O(1)
      */
-    public static int[] bubbleSort(int[] arr) {
+    public static void bubbleSort(int[] arr) {
         if (arr == null || arr.length <= 1) {
-            return arr;
+            return;
         }
 
         for (int i = 0; i < arr.length - 1; i++) {
@@ -33,7 +33,6 @@ class BubbleSort {
                 break;
             }
         }
-        return arr;
     }
 
 
