@@ -1,12 +1,12 @@
+import java.util.Arrays;
+
 class BubbleSort {
 
 
     public static void main(String[] args) {
         int[] arr = new int[]{5,2,18,3,11,90,45,22};
         arr = bubbleSort(arr);
-        for (int a: arr) {
-            System.out.println(a);
-        }
+        System.out.println(Arrays.toString(arr));
     }
 
 
