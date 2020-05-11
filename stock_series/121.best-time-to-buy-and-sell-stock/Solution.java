@@ -80,8 +80,8 @@ class Solution {
         int sell = 0;
 
         for (int i = 1; i < prices.length; i++) {
-			buy = Math.max(buy, -prices[i]);
             sell = Math.max(sell, buy+prices[i]);
+			buy = Math.max(buy, -prices[i]);
             //System.out.println("buy: " + buy + " sell: " + sell);
             //buy: -1 sell: 0
             //buy: -1 sell: 4

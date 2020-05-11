@@ -47,8 +47,9 @@ class Solution {
 
         for (int i = 1; i < length; i++) {
             for (int j = 0; j < k; j++) {
+                int tmp_buy = buy[j];
                 buy[j] = Math.max(buy[j], (j >= 1 ? sell[j-1]: 0) - prices[i]);
-                sell[j] = Math.max(sell[j], buy[j] + prices[i]);
+                sell[j] = Math.max(sell[j], tmp_buy + prices[i]);
             }
         }
         return sell[k-1];

@@ -82,8 +82,9 @@ class Solution {
         int sale = 0;
 
         for (int i = 1; i < prices.length; i++) {
+            int tmp_buy = buy;
             buy = Math.max(buy, sale-prices[i]);
-            sale = Math.max(sale, buy+prices[i]);
+            sale = Math.max(sale, tmp_buy + prices[i]);
         }
         return sale;
     }
