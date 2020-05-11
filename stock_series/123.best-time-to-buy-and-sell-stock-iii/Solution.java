@@ -19,10 +19,7 @@ public class Solution {
     public static int maxProfit1(int[] prices) {
         /**
          * 1.最后一步和子问题分析
-         * dp[i][j][0]表示第i天已进行了j次交易，0表示当天最终不持有股票。
-         * dp[i][j][1]表示第i天已进行了j次交易，1表示当天最终持有股票。
-         * 其中交易次数在买入的时候就加一次
-         * 卖出不算交易次数
+         * dp[i][j][0]表示第i天已进行了j+1次交易，0/1表示当天最终不持有/持有股票。
          *
          * 2.状态转移方程
          * 当天最终不持有股票，最大收益情况分析：
@@ -36,6 +33,7 @@ public class Solution {
          * 3.初始化和边界条件
          * dp[0][j][0] = 0
          * dp[0][j][1] = -prices[0]
+         * 其次j-1不能小于0
          *
          * 4.遍历顺序，从头开始
          */
@@ -46,22 +44,21 @@ public class Solution {
 
         int length = prices.length;
         int K = 2;
-        int[][][] dp = new int[length][K + 1][2];   // K+1
+        int[][][] dp = new int[length][K][2];
 
         for (int i = 0; i < length; i++) {
-            //dp[i][0][0] = 0;   因为java初始化数组时初始值都为0，因此可省略
-            for (int j = 1; j <= K; j++) {
+            for (int j = 0; j < K; j++) {
                 if (i == 0) {
                     dp[i][j][0] = 0;
                     dp[i][j][1] = -prices[i];
                     continue;           // initialization后跳过
                 }
                 dp[i][j][0] = Math.max(dp[i-1][j][0], dp[i-1][j][1] + prices[i]);
-                dp[i][j][1] = Math.max(dp[i-1][j][1], dp[i-1][j-1][0] - prices[i]);
+                dp[i][j][1] = Math.max(dp[i-1][j][1], (j>=1 ? dp[i-1][j-1][0] : 0) - prices[i]);
             }
         }
 
-        return dp[length-1][K][0];
+        return dp[length-1][K-1][0];
     }
 
 
