@@ -61,7 +61,7 @@ class Solution {
          * 卖了的，可能是之前卖的，也可能是今天卖的
          * 2.转移方程
          * buy = max(buy, -prices[i])
-         * sell = max(sell, -prices[i])
+         * sell = max(sell, buy+prices[i])
          * 3.初始值和边界条件
          * buy = -prices[0]，第一天就持有股票
          * sell = 0，第一天买了就卖
@@ -80,14 +80,14 @@ class Solution {
         int sell = 0;
 
         for (int i = 1; i < prices.length; i++) {
-            sell = Math.max(sell, buy+prices[i]);
+			sell = Math.max(sell, buy+prices[i]);
 			buy = Math.max(buy, -prices[i]);
-            //System.out.println("buy: " + buy + " sell: " + sell);
-            //buy: -1 sell: 0
-            //buy: -1 sell: 4
-            //buy: -1 sell: 4
-            //buy: -1 sell: 5
-            //buy: -1 sell: 5
+            System.out.println("buy: " + buy + " sell: " + sell);
+            // buy: -1 sell: 0
+			// buy: -1 sell: 4
+			// buy: -1 sell: 4
+			// buy: -1 sell: 5
+			// buy: -1 sell: 5
         }
         return sell;
     }
