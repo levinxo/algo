@@ -6,22 +6,19 @@ public class BinarySearch {
             return -1;
         }
 
-        // 初始化头尾index
-        int l = 0, r = arr.length - 1;
+        int low = 0, high = arr.length - 1;
 
-        while (l <= r) {
-            // 计算中间值
-            int m = l + (r - l) / 2;    // 每次循环要重新计算m
-
-            // 更新头尾index
-            if (arr[m] == value) {
-                return m;
-            } else if (arr[m] > value) {
-                r = m - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (value < arr[mid]) {
+                high = mid - 1;
+            } else if (value > arr[mid]) {
+                low = mid + 1;
             } else {
-                l = m + 1;
+                return mid;
             }
         }
+
         return -1;
     }
 
