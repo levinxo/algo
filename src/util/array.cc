@@ -59,8 +59,10 @@ void test_sort(F sort_func, int len, Args&... rest){
     assert_array_order<int>(arr, len, true);
 }
 
-// quick sort
-typedef void (*f1)(int*, int, int);
+typedef void (*f1)(int*, int, int);     // quick sort
+typedef void (*f2)(int*, int);     // bubble sort
+
 template void test_sort(f1, int, int&, int&);
+template void test_sort(f2, int, int&);
 
 

@@ -7,6 +7,7 @@ namespace sort {
 
 void quick_sort(int *arr, int begin, int end);
 void test_quick_sort();
+void test_bubble_sort();
 
 
 }      // namespace sort
