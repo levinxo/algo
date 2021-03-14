@@ -1,5 +1,6 @@
 #include <fmt/color.h>
 #include "src/util/util.h"
+#include "src/sort/sort.h"
 
 
 namespace sort {
@@ -34,21 +35,14 @@ void quick_sort(int *arr, int begin, int end) {
     quick_sort(arr, i, end);
 }
 
+
 void test_quick_sort() {
     fmt::print(fg(fmt::color::yellow), "Quick Sort\n");
 
     int len = 10;
-    int *arr = generate_array<int>(len);
-
-    fmt::print(fg(fmt::color::light_yellow), "origin array:\n");
-    print_array<int>(arr, len);
-
-    quick_sort(arr, 0, len - 1);
-
-    fmt::print("resorted array:\n");
-    print_array<int>(arr, len);
-
-    assert_array_order<int>(arr, len, true);
+    int start = 0;
+    int end = len - 1;
+    test_sort(quick_sort, len, start, end);
 }
 
 
