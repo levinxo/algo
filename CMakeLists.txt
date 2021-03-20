@@ -13,8 +13,9 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 add_subdirectory(src/util)
 add_subdirectory(src/sort)
+add_subdirectory(src/bfs)
 
-set(EXTRA_LIBS ${EXTRA_LIBS} sort)
+set(EXTRA_LIBS ${EXTRA_LIBS} sort bfs)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 include(thirdparty)
